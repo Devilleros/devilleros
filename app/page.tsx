@@ -1,15 +1,17 @@
-import Image from "next/image";
+"use client";
+
+import { SquareChevronRight } from "lucide-react";
+import Link from "next/link";
+import Steam from "./components/stetic/Steam";
 
 export default function Home() {
   return (
-    <div>
-      <main>
-        <h1 className="absolute top-1/2 left-1/2 z-10 w-full max-w-3xl
-         -translate-x-1/2 -translate-y-1/2 transform text-center font-mono
-          text-sm lg:flex lg:items-center lg:justify-center">
-          Bienvenido a devilleros.com
-        </h1>
-      </main>
+    <div className="min-h-screen flex flex-col items-center justify-center ">
+      <Steam />
+      <h1 className="text-4xl mb-4 font-press">Bienvenido a devilleros.com</h1>
+      <Link href="/inicio">
+        <SquareChevronRight size={50} strokeWidth={1.5} />
+      </Link>
     </div>
-  );
+  )
 }
