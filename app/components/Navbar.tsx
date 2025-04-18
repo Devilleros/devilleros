@@ -12,6 +12,11 @@ export default function Navbar() {
                 inicio
             </Link>
             </li>
+            <li>
+            <Link href="/login" className="hover:text-gray-300">
+                login
+            </Link>
+            </li>
         </ul>
         </nav>
     );
