@@ -27,8 +27,8 @@ export default function NatPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 flex flex-col">
-      {/* Modal de bienvenida */}
-      {showModal && (
+      {/* Modal de bienvenida - Comentado */}
+      {/* {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-pink-200/50 max-w-2xl w-full mx-4 transform transition-all duration-300 scale-100">
             <div className="p-8 text-center">
@@ -65,7 +65,7 @@ export default function NatPage() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {/* Header con gradiente */}
       <div className="bg-gradient-to-r from-pink-300 to-rose-400 text-pink-900 py-12">
         <div className="max-w-6xl mx-auto px-8 text-center">
