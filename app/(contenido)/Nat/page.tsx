@@ -94,12 +94,12 @@ export default function NatPage() {
             <div className="p-8">
               {/* @ts-ignore */}
               <model-viewer
-                src="/modelo3d/ensayo.glb"
+                src="/modelo3d/conservacion.glb"
                 alt="Modelo 3D Ensayo"
                 auto-rotate
                 camera-controls
                 ar
-                ios-src="/modelo3d/ensayo.glb"
+                ios-src="/modelo3d/conservacion.glb"
                 style={{
                   width: '100%',
                   height: '600px',
