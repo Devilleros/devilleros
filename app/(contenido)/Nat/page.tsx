@@ -34,33 +34,32 @@ export default function NatPage() {
             <div className="p-8 text-center">
               <div className="mb-6">
                 <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🧬</span>
+                  <span className="text-2xl">😄</span>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                  Bienvenido al Modelo 3D
+                  Solo un detalle
                 </h2>
               </div>
               
-              <blockquote className="text-lg text-gray-700 italic leading-relaxed mb-6">
-                "Proteins are the machinery of living tissue that builds the structures and carries out the chemical reactions necessary for life."
-              </blockquote>
+              <div className="text-lg text-gray-700 leading-relaxed mb-6">
+                <p className="mb-4 font-medium text-pink-700">
+                  Con cariño, por todo el esfuerzo que has puesto.
+                </p>
+                <p className="text-lg text-gray-800">
+                  Sé que puedes lograrlo. <span className="text-pink-500">❤️</span>
+                </p>
+              </div>
               
-              <p className="text-sm text-gray-600 mb-8">
-                — Michael Behe
+              <p className="text-sm text-gray-500 mb-8 italic">
+                (Este mensaje se cambiará antes de la presentación xD)
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex justify-center">
                 <button
                   onClick={closeModal}
-                  className="bg-gradient-to-r from-pink-400 to-rose-500 text-white px-8 py-3 rounded-xl font-medium hover:from-pink-500 hover:to-rose-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="bg-gradient-to-r from-pink-400 to-rose-500 text-white px-12 py-3 rounded-xl font-medium hover:from-pink-500 hover:to-rose-600 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
-                  Explorar Modelo
-                </button>
-                <button
-                  onClick={closeModal}
-                  className="bg-gray-100 text-gray-700 px-8 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200"
-                >
-                  Cerrar
+                  Continuar
                 </button>
               </div>
             </div>
@@ -161,7 +160,7 @@ export default function NatPage() {
               un detalle para alguien especial
             </p>
             <div className="mt-4 flex justify-center">
-              <div className="w-16 h-0.5 bg-gradient-to-r from-pink-300 to-rose-400"></div>
+              <div className="w-16 h-0.5 bg-gradient-to-r from-pink-300 to-rose-400">-..-------</div>
             </div>
           </div>
         </div>
