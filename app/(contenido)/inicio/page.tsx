@@ -1,7 +1,7 @@
 "use client"
 
 import { signOut, useSession } from "../../../lib/auth/auth-client";
-import CardInicio from "../../components/CardInicio";
+import CardInicio from "../../components/inicio/CardInicio";
 
 export default function Inicio() {
     const { data: session } = useSession();
