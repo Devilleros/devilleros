@@ -12,7 +12,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/app/components/ui/card";
+} from "@/app/components/ui-drawio/card";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { ChatInput } from "@/app/components/drawio/chat-input";

@@ -7,8 +7,8 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/app/components/ui/dialog";
-import { Button } from "@/app/components/ui/button";
+} from "@/app/components/ui-drawio/dialog";
+import { Button } from "@/app/components/ui-drawio/button";
 import Image from "next/image";
 import { useDiagram } from "@/contexts/diagram-context";
 

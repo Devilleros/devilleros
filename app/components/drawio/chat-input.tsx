@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useCallback, useRef, useEffect, useState } from "react";
-import { Button } from "@/app/components/ui/button";
-import { Textarea } from "@/app/components/ui/textarea";
+import { Button } from "@/app/components/ui-drawio/button";
+import { Textarea } from "@/app/components/ui-drawio/textarea";
 import { ResetWarningModal } from "@/app/components/drawio/reset-waring-modal";
 import {
     Loader2,

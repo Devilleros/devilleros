@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, buttonVariants } from "@/app/components/ui/button";
+import { Button, buttonVariants } from "@/app/components/ui-drawio/button";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/app/components/ui/tooltip";
+} from "@/app/components/ui-drawio/tooltip";
 import { type VariantProps } from "class-variance-authority";
 
 interface ButtonWithTooltipProps

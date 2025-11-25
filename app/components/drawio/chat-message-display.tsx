@@ -3,7 +3,7 @@
 import type React from "react";
 import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { ScrollArea } from "@/app/components/ui/scroll-area";
+import { ScrollArea } from "@/app/components/ui-drawio/scroll-area";
 import ExamplePanel from "@/app/components/drawio/chat-example-panel";
 import { UIMessage } from "ai";
 import { convertToLegalXml, replaceNodes } from "@/lib/utils";

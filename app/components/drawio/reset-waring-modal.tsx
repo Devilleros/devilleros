@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/app/components/ui-drawio/button";
 import {
     Dialog,
     DialogContent,
@@ -8,7 +8,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/app/components/ui/dialog";
+} from "@/app/components/ui-drawio/dialog";
 
 interface ResetWarningModalProps {
     open: boolean;
