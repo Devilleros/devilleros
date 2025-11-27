@@ -134,8 +134,8 @@ ${lastMessageText}
     // Generar la respuesta con streaming
     const result = streamText({
       model,
-      // system: systemMessage,
-      system: "- Generate valid, well-formed XML strings for draw.io diagrams",
+      system: systemMessage,
+      // system: "- Generate valid, well-formed XML strings for draw.io diagrams",
       messages: enhancedMessages,
       tools: {
         // Client-side tool that will be executed on the client
