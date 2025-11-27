@@ -20,7 +20,7 @@ export default function Inicio() {
                     />
                     <CardInicio
                         titulo="Next AI Draw.io"
-                        imagen="/drawio/drawio.jpg"
+                        imagen="/drawio/diagramaImage.jpg"
                         descripcion="Aplicación web Next.js que integra capacidades de IA con diagramas de draw.io. Permite crear, modificar y mejorar diagramas mediante comandos de lenguaje natural y visualización asistida por IA."
                         href="/drawio"
                     />
