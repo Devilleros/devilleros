@@ -24,6 +24,12 @@ export default function Inicio() {
                         descripcion="Aplicación web Next.js que integra capacidades de IA con diagramas de draw.io. Permite crear, modificar y mejorar diagramas mediante comandos de lenguaje natural y visualización asistida por IA."
                         href="/drawio"
                     />
+                    <CardInicio
+                        titulo="Univer JS"
+                        imagen="/univerjs/univerjs.png"
+                        descripcion="Aplicación web de hoja de cálculo potente y moderna basada en Univer JS. Permite crear, editar y gestionar libros de trabajo completos con funcionalidades avanzadas de cálculo, formato y visualización de datos en tiempo real."
+                        href="/univerjs"
+                    />
                 </div>
 
                 {/* Información de sesión */}
