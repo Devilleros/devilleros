@@ -30,6 +30,12 @@ export default function Inicio() {
                         descripcion="Aplicación web de hoja de cálculo potente y moderna basada en Univer JS. Permite crear, editar y gestionar libros de trabajo completos con funcionalidades avanzadas de cálculo, formato y visualización de datos en tiempo real."
                         href="/univerjs"
                     />
+                    <CardInicio
+                        titulo="Working Time"
+                        imagen="/working-time/working-time.jpg"
+                        descripcion="Sistema completo de registro de jornada laboral con base de datos, backend y frontend. Permite a los trabajadores iniciar y terminar su jornada con un código único, visualizar el tiempo laborado en tiempo real mediante un cronómetro, y registrar automáticamente hora de entrada, hora de salida y tiempo total laborado."
+                        href="/working-time"
+                    />
                 </div>
 
                 {/* Información de sesión */}
