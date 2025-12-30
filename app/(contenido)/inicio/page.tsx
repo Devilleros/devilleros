@@ -32,7 +32,7 @@ export default function Inicio() {
                     />
                     <CardInicio
                         titulo="Working Time"
-                        imagen="/working-time/working-time.jpg"
+                        imagen="/working-time/09567c98-d2c2-43e7-a042-d8a64bedc808.png"
                         descripcion="Sistema completo de registro de jornada laboral con base de datos, backend y frontend. Permite a los trabajadores iniciar y terminar su jornada con un código único, visualizar el tiempo laborado en tiempo real mediante un cronómetro, y registrar automáticamente hora de entrada, hora de salida y tiempo total laborado."
                         href="/working-time"
                     />
