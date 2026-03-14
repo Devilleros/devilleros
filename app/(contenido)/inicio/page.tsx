@@ -26,7 +26,7 @@ export default function Inicio() {
                     />
                     <CardInicio
                         titulo="Univer JS"
-                        imagen="/univerjs/univerjs.png"
+                        imagen="/univerjs/univer_js.jpg"
                         descripcion="Aplicación web de hoja de cálculo potente y moderna basada en Univer JS. Permite crear, editar y gestionar libros de trabajo completos con funcionalidades avanzadas de cálculo, formato y visualización de datos en tiempo real."
                         href="/univerjs"
                     />
