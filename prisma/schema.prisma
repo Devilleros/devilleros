@@ -38,3 +38,23 @@ model Registro {
   @@index([createdAt])
   @@map("registros")
 }
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  lastName      String?
+  image         String?
+  passwordHash  String? //null si es por OAuth
+
+  provider      String? //google, github, etc.
+  providerId    String? //id del proveedor}
+
+  role          String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+  @@index([providerId, provider])
+}
