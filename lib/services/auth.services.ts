@@ -1,16 +1,28 @@
 import bcrypt from "bcrypt";
 import { createUser, findUserByEmail } from "./user.services";
 import { signToken } from "../auth/jwt";
-import { User } from "@/types/user";
 
 const SALT_ROUNDS = 10;
 
-export const registerUser = async (user: User) => {
-    const existingUser = await findUserByEmail(user.email as string);
+export type RegisterInput = {
+    email: string;
+    password: string;
+    name?: string;
+    lastName?: string;
+};
+
+export const registerUser = async (input: RegisterInput) => {
+    const existingUser = await findUserByEmail(input.email);
     if (existingUser) throw new Error("User already exists");
 
-    const passwordHash = await bcrypt.hash(user.passwordHash as string, SALT_ROUNDS);
-    const newUser = await createUser({ ...user, passwordHash });
+    const passwordHash = await bcrypt.hash(input.password, SALT_ROUNDS);
+    const newUser = await createUser({
+        email: input.email,
+        name: input.name,
+        lastName: input.lastName,
+        passwordHash,
+        role: "USER",
+    });
     return newUser;
 }
 
