@@ -11,34 +11,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Trabajador {
-  codigo        String    @id @db.VarChar(6)
-  isWorking     Boolean   @default(false)
-  ultimaEntrada DateTime? @map("ultima_entrada")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  registros Registro[]
-
-  @@map("trabajadores")
-}
-
-model Registro {
-  id              Int      @id @default(autoincrement())
-  codigoTrabajador String  @map("codigo_trabajador")
-  horaEntrada     DateTime @map("hora_entrada")
-  horaSalida      DateTime @map("hora_salida")
-  tiempoTotal     BigInt   @map("tiempo_total") // en milisegundos
-  createdAt       DateTime @default(now()) @map("created_at")
-
-  trabajador Trabajador @relation(fields: [codigoTrabajador], references: [codigo], onDelete: Cascade)
-
-  @@index([codigoTrabajador])
-  @@index([horaEntrada])
-  @@index([createdAt])
-  @@map("registros")
-}
-
 model User {
   id            String   @id @default(uuid())
   email         String   @unique
