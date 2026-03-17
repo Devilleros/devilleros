@@ -1,5 +1,7 @@
 export const AUTH_TOKEN_KEY = "auth_token";
 
+import { User } from "@/types/user";
+
 export type LoginCredentials = {
     email: string;
     password: string;
@@ -7,7 +9,7 @@ export type LoginCredentials = {
 
 export type LoginSuccess = {
     token: string;
-    user: unknown;
+    user: User;
 };
 
 export async function login(credentials: LoginCredentials): Promise<LoginSuccess> {
@@ -38,7 +40,7 @@ export type RegisterCredentials = {
 };
 
 export type RegisterSuccess = {
-    user: unknown;
+    user: User;
 };
 
 export async function register(credentials: RegisterCredentials): Promise<RegisterSuccess> {
@@ -59,4 +61,17 @@ export async function register(credentials: RegisterCredentials): Promise<Regist
     }
 
     return { user: data.user };
+}
+
+export async function getMe(token: string): Promise<User> {
+    const res = await fetch("/api/me", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) {
+        throw new Error("Error al obtener el usuario");
+    }
+    const data = await res.json().catch(() => ({}));
+    return data.user as User;
 }
