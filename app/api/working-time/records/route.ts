@@ -1,46 +1,33 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 
 /**
  * API Route para obtener todos los registros de jornadas
  * GET /api/working-time/records
- * Ordenados por más recientes primero
+ * Por ahora devuelve constantes.
  */
 export async function GET() {
-    try {
-        const registros = await prisma.registro.findMany({
-            include: {
-                trabajador: {
-                    select: {
-                        codigo: true,
-                    },
-                },
-            },
-            orderBy: {
-                createdAt: "desc",
-            },
-        });
-
-        // Formatear los registros para el frontend
-        const registrosFormateados = registros.map((registro) => ({
-            id: registro.id,
-            codigo: registro.codigoTrabajador,
-            horaEntrada: registro.horaEntrada.toISOString(),
-            horaSalida: registro.horaSalida.toISOString(),
-            tiempoTotal: Number(registro.tiempoTotal), // Convertir BigInt a Number
-            createdAt: registro.createdAt.toISOString(),
-        }));
-
-        return NextResponse.json({
-            success: true,
-            records: registrosFormateados,
-        });
-    } catch (error) {
-        console.error("Error al obtener registros:", error);
-        return NextResponse.json(
-            { success: false, error: "Error al obtener los registros" },
-            { status: 500 }
-        );
-    }
+    const now = new Date();
+    const today = now.toISOString().slice(0, 10);
+    const records = [
+        {
+            id: "1",
+            codigo: "123456",
+            horaEntrada: `${today}T08:00:00.000Z`,
+            horaSalida: `${today}T16:00:00.000Z`,
+            tiempoTotal: 8 * 60 * 60 * 1000,
+            createdAt: now.toISOString(),
+        },
+        {
+            id: "2",
+            codigo: "654321",
+            horaEntrada: `${today}T09:00:00.000Z`,
+            horaSalida: `${today}T17:00:00.000Z`,
+            tiempoTotal: 8 * 60 * 60 * 1000,
+            createdAt: new Date(now.getTime() - 86400000).toISOString(),
+        },
+    ];
+    return NextResponse.json({
+        success: true,
+        records,
+    });
 }
-
