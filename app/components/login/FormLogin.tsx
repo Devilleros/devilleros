@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { login, AUTH_TOKEN_KEY } from "@/lib/api/auth";
+import { useAuth } from "@/hooks/userSession";
 
 export default function FormLogin() {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -19,14 +20,13 @@ export default function FormLogin() {
 
         setIsLoading(true);
         try {
-            const { token } = await login({ email, password });
-            if (typeof window !== "undefined") {
-                localStorage.setItem(AUTH_TOKEN_KEY, token);
-            }
+            await login(email, password);
             router.push("/");
             router.refresh();
+            setIsLoading(false);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Error de conexión. Intenta de nuevo.");
+            setIsLoading(false);
         } finally {
             setIsLoading(false);
         }

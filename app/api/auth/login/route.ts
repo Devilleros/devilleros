@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { loginUser } from "@/lib/services/auth.services";
+import { AUTH_COOKIE_NAME, AUTH_COOKIE_MAX_AGE } from "@/lib/auth/cookies";
 
 const bodySchema = z.object({
     email: z.string().email(),
@@ -12,8 +13,16 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const parsed = bodySchema.parse(body);
         const { email, password } = parsed;
-        const { token, user } = await loginUser(email, password);
-        return NextResponse.json({ token, user }, { status: 200 });
+        const { user, token } = await loginUser(email, password);
+        const response = NextResponse.json( { user }, { status: 200 });
+        response.cookies.set(AUTH_COOKIE_NAME, token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: AUTH_COOKIE_MAX_AGE,
+            path: "/",
+            sameSite: "lax",
+        });
+        return response;
     } catch (error) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(

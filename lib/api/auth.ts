@@ -1,4 +1,4 @@
-export const AUTH_TOKEN_KEY = "auth_token";
+// export const AUTH_TOKEN_KEY = "auth_token";
 
 import { User } from "@/types/user";
 
@@ -8,12 +8,13 @@ export type LoginCredentials = {
 };
 
 export type LoginSuccess = {
-    token: string;
+    //token: string;
     user: User;
 };
 
 export async function login(credentials: LoginCredentials): Promise<LoginSuccess> {
     const res = await fetch("/api/auth/login", {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -25,11 +26,11 @@ export async function login(credentials: LoginCredentials): Promise<LoginSuccess
         throw new Error(message);
     }
 
-    if (!data.token) {
+    if (!data.user) {
         throw new Error("Error al iniciar sesión");
     }
 
-    return { token: data.token, user: data.user };
+    return { user: data.user };
 }
 
 export type RegisterCredentials = {
@@ -45,6 +46,7 @@ export type RegisterSuccess = {
 
 export async function register(credentials: RegisterCredentials): Promise<RegisterSuccess> {
     const res = await fetch("/api/auth/register", {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -63,15 +65,32 @@ export async function register(credentials: RegisterCredentials): Promise<Regist
     return { user: data.user };
 }
 
-export async function getMe(token: string): Promise<User> {
+export type GetMeSuccess = {
+    user: User;
+};
+
+export async function getMe(): Promise<GetMeSuccess> {
     const res = await fetch("/api/me", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        credentials: "include",
     });
     if (!res.ok) {
         throw new Error("Error al obtener el usuario");
     }
     const data = await res.json().catch(() => ({}));
-    return data.user as User;
+    return { user: data.user };
+}
+
+export type LogoutSuccess = {
+    message: string;
+};
+
+export async function logout(): Promise<LogoutSuccess> {
+    const res = await fetch("/api/auth/logout", {
+        credentials: "include",
+        method: "POST",
+    });
+    if (!res.ok) {
+        throw new Error("Error al cerrar sesión");
+    }
+    return { message: "Sesión cerrada correctamente" };
 }

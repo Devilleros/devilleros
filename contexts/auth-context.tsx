@@ -3,70 +3,59 @@
 import { User } from "@/types/user";
 import { createContext, useState, useEffect } from "react";
 import { AuthContextType } from "@/types/user";
-import { AUTH_TOKEN_KEY, getMe } from "@/lib/api/auth";
+import { getMe, logout as logoutApi } from "@/lib/api/auth";
 import { login as loginApi } from "@/lib/api/auth";
 
-export const AuthContext = createContext<AuthContextType>({
-    user: null,
-    token: null,
-    isLoading: false,
-    isAuthenticated: false,
-    login: async () => {},
-    logout: () => {},
-});
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
-        const token = localStorage.getItem(AUTH_TOKEN_KEY);
-        if (token) {
-            getMe(token).then((user) => {
+        setIsLoading(true);
+
+        const fetchUser = async () => {
+            try {
+                const { user } = await getMe();
                 setUser(user);
-                setToken(token);
-                setIsLoading(false);
-            }).catch((error) => {
-                console.error(error);
-                localStorage.removeItem(AUTH_TOKEN_KEY);
+            } catch (error) {
                 setUser(null);
-                setToken(null);
+            } finally {
                 setIsLoading(false);
-            });
-        }else{
-            localStorage.removeItem(AUTH_TOKEN_KEY);
-            setUser(null);
-            setToken(null);
-            setIsLoading(false);
-        }
+            }
+        };
+
+        fetchUser();
     }, []);
 
     const login = async (email: string, password: string) => {
-        loginApi({email, password}).then(({token, user}) => {
-            if (typeof window !== "undefined") {
-                localStorage.setItem(AUTH_TOKEN_KEY, token);
-            }
+        setIsLoading(true);
+        try {
+            const { user } = await loginApi({email, password});
             setUser(user);
-            setToken(token);
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
-
-    const logout = () => {
-        if (typeof window !== "undefined") {
-            localStorage.removeItem(AUTH_TOKEN_KEY);
+        } catch (error) {
+            setIsLoading(false);
+            throw error;
+        } finally {
+            setIsLoading(false);
         }
-        setUser(null);
-        setToken(null);
     }
 
-    const isAuthenticated = !!user && !!token;
+    const logout = async () => {
+        try {
+            const { message } = await logoutApi();
+            setUser(null);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    const isAuthenticated = !!user;
 
     return (
-        <AuthContext.Provider value={{ user, token, isLoading, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ user, isLoading, isAuthenticated, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
