@@ -21,7 +21,7 @@ export default function FormLogin() {
         setIsLoading(true);
         try {
             await login(email, password);
-            router.push("/");
+            router.push("/inicio");
             router.refresh();
             setIsLoading(false);
         } catch (err) {
