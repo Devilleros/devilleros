@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Press_Start_2P } from "next/font/google";
 
@@ -9,12 +9,14 @@ const pressStart = Press_Start_2P({
   weight: "400",
 });
 
-const geistSans = Geist({
+const interSans = Inter({
+  // Conservamos el nombre de variable para que `app/globals.css` no tenga que cambiar.
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const mono = JetBrains_Mono({
+  // Conservamos el nombre de variable para que los `font-mono` sigan funcionando.
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -35,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${pressStart.variable} antialiased`}
+        className={`${interSans.variable} ${mono.variable} ${pressStart.variable} ${interSans.className} antialiased`}
       >
         {children}
       </body>
