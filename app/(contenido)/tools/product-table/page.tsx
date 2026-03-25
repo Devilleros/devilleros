@@ -1,9 +1,11 @@
-"use client"
+"use client";
+
+import { ProdTableWizard } from "@/app/components/wizard-prod-table/ProdTableWizard";
 
 export default function ProductTablePage() {
-    return (
-        <div>
-            <h1>Tabla de productos</h1>
-        </div>
-    )
+  return (
+    <div className="min-h-[calc(100vh-64px)]">
+      <ProdTableWizard />
+    </div>
+  );
 }
