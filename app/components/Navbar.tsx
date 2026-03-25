@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
   ArrowLeft,
+  Clock,
   Grid2X2,
   Home,
   Info,
@@ -31,7 +32,9 @@ import {
   LogOut,
   Menu,
   Moon,
+  Rotate3D,
   Sun,
+  Workflow,
   Wrench,
 } from "lucide-react";
 import Link from "next/link";
@@ -65,7 +68,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/50">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
         {/* Logo (placeholder) */}
         <Button asChild variant="ghost" size="icon" className="rounded-full">
           <Link href="/" aria-label="Volver a /">
@@ -97,7 +100,7 @@ export default function Navbar() {
                 </NavigationMenuItem> */}
 
                 <NavigationMenuItem className="ml-5">
-                  <NavigationMenuLink href="/#">
+                  <NavigationMenuLink href="/inicio/#">
                     <Info className="h-4 w-4" />
                     <span>Info</span>
                   </NavigationMenuLink>
@@ -114,7 +117,7 @@ export default function Navbar() {
                   <NavigationMenuContent>
                     <div className="grid gap-3 p-2 md:w-[520px] md:grid-cols-2">
                       <NavigationMenuLink href="/tools/drawio">
-                        <Grid2X2 className="h-4 w-4" />
+                        <Workflow className="h-4 w-4" />
                         <span className="leading-tight">
                           <span className="block text-sm font-semibold">Diagramas</span>
                           <span className="block text-xs text-muted-foreground">Draw.io + IA</span>
@@ -122,23 +125,31 @@ export default function Navbar() {
                       </NavigationMenuLink>
 
                       <NavigationMenuLink href="/tools/univerjs">
-                        <Wrench className="h-4 w-4" />
+                        <Grid2X2 className="h-4 w-4" />
                         <span className="leading-tight">
                           <span className="block text-sm font-semibold">Hoja de cálculo</span>
                           <span className="block text-xs text-muted-foreground">Univer JS</span>
                         </span>
                       </NavigationMenuLink>
 
-                      <NavigationMenuLink href="/tools/Nat">
-                        <Wrench className="h-4 w-4" />
+                      <NavigationMenuLink href="/tools/product-table">
+                        <Grid2X2 className="h-4 w-4" />
                         <span className="leading-tight">
-                          <span className="block text-sm font-semibold">Molecula3D</span>
+                          <span className="block text-sm font-semibold">Tabla de productos</span>
+                          <span className="block text-xs text-muted-foreground">Tabla de productos</span>
+                        </span>
+                      </NavigationMenuLink>
+
+                      <NavigationMenuLink href="/tools/Nat">
+                        <Rotate3D className="h-4 w-4" />
+                        <span className="leading-tight">
+                          <span className="block text-sm font-semibold">Molecula 3D</span>
                           <span className="block text-xs text-muted-foreground">Modelo 3D</span>
                         </span>
                       </NavigationMenuLink>
 
                       <NavigationMenuLink href="/tools/working-time">
-                        <Wrench className="h-4 w-4" />
+                        <Clock className="h-4 w-4" />
                         <span className="leading-tight">
                           <span className="block text-sm font-semibold">Medir tiempo</span>
                           <span className="block text-xs text-muted-foreground">Working Time</span>
