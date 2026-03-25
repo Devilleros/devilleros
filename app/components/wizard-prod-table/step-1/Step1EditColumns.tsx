@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import type { ProdTableColumnType } from "../types";
+import type { ProdTableColumnType } from "../../../../types/product-table/types";
 import { useProdTableWizard } from "../ProdTableWizardProvider";
 import { Button } from "@/components/ui/button";
 

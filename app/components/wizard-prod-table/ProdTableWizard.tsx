@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ProdTableWizardProvider } from "./ProdTableWizardProvider";
 import { Step1EditColumns } from "./step-1/Step1EditColumns";
-import { Step2Placeholder } from "./step-2/Step2Placeholder";
+import { Step2EditRecords } from "@/app/components/wizard-prod-table/step-2/Step2EditRecords";
 import { ProdTableWizardStepper } from "./stepper/ProdTableWizardStepper";
 
 export function ProdTableWizard() {
@@ -17,7 +17,7 @@ export function ProdTableWizard() {
         {step === 1 ? (
           <Step1EditColumns onNext={() => setStep(2)} />
         ) : (
-          <Step2Placeholder onBack={() => setStep(1)} />
+          <Step2EditRecords onBack={() => setStep(1)} />
         )}
       </div>
     </ProdTableWizardProvider>
