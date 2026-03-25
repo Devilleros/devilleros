@@ -20,8 +20,8 @@ export function Step3Preview({ onBack }: { onBack: () => void }) {
     return `tabla-productos_${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}.xlsx`;
   }, []);
 
-  const handleExport = () => {
-    const xlsx = buildProductTableXlsx(columns, records);
+  const handleExport = async () => {
+    const xlsx = await buildProductTableXlsx(columns, records);
     downloadXlsxFile(filename, xlsx);
   };
 
@@ -32,9 +32,10 @@ export function Step3Preview({ onBack }: { onBack: () => void }) {
           <div>
             <h2 className="text-lg font-semibold">Vista previa</h2>
             <p className="text-sm text-muted-foreground">
-              Revisa los datos antes de exportar. En el archivo Excel las imágenes aparecen como{" "}
-              <span className="font-medium text-foreground/90">[imagen]</span> (no se incrusta el
-              archivo).
+              Revisa los datos antes de exportar. Las imágenes en <span className="font-medium">PNG</span>,{" "}
+              <span className="font-medium">JPEG</span> o <span className="font-medium">GIF</span> se
+              incrustan en el Excel. Otros formatos (p. ej. WebP) se exportan como texto{" "}
+              <span className="font-medium text-foreground/90">[imagen]</span>.
             </p>
           </div>
           <Button type="button" className="gap-2 sm:w-auto w-full" onClick={handleExport}>
