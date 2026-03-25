@@ -3,24 +3,26 @@
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import BackgroundBeamsDemo from "./components/home/animated-beam";
 
 export default function Home() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-black">
       {/* Fondo Spline */}
-      <iframe
+      {/* <iframe
         src="https://my.spline.design/cutecomputerfollowcursor-kJ8TfYXwSqxGVpBJP792mfNn/"
         className="absolute inset-0 w-full h-full z-0"
         frameBorder={0}
         title="Fondo Spline"
         loading="lazy"
-      />
+      /> */}
+      <BackgroundBeamsDemo />
 
       {/* Overlay para legibilidad */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/30 to-black/80" />
       {/* Barras suaves (arriba y abajo) */}
-      <div className="absolute top-0 left-0 right-0 z-20 h-16 bg-black backdrop-blur-sm" />
-      <div className="absolute bottom-0 left-0 right-0 z-20 h-16 bg-black backdrop-blur-sm" />
+      {/* <div className="absolute top-0 left-0 right-0 z-20 h-16 bg-black backdrop-blur-sm" />
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-16 bg-black backdrop-blur-sm" /> */}
 
       {/* Contenido encima */}
       <div className="relative z-30 min-h-screen flex items-center justify-center p-6">
