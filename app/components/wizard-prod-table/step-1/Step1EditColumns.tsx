@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { Trash2 } from "lucide-react";
 import type { ProdTableColumnType } from "../../../../types/product-table/types";
 import { useProdTableWizard } from "../ProdTableWizardProvider";
 import { Button } from "@/components/ui/button";
@@ -25,36 +26,23 @@ export function Step1EditColumns({ onNext }: { onNext: () => void }) {
           {columns.map((col) => {
             const canRemove = columns.length > 1;
             return (
-              <div key={col.id} className="grid grid-cols-12 items-end gap-3">
-                <div className="col-span-7">
+              <div
+                key={col.id}
+                className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end sm:gap-x-2 sm:gap-y-3"
+              >
+                <div className="min-w-0">
                   <label className="mb-2 block text-sm font-medium text-foreground/90">
                     Título
                   </label>
-                  <div className="flex items-end gap-2">
-                    <input
-                      value={col.title}
-                      onChange={(e) => setColumnTitle(col.id, e.target.value)}
-                      placeholder="Nombre de columna"
-                      className="h-10 w-full rounded-lg border border-border/60 bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="h-10 w-10 rounded-full"
-                      disabled={!canRemove}
-                      onClick={() => removeColumn(col.id)}
-                      aria-label="Eliminar columna"
-                      title={!canRemove ? "Se requiere al menos 1 columna" : "Eliminar columna"}
-                    >
-                      <span aria-hidden className="text-base leading-none">
-                        -
-                      </span>
-                    </Button>
-                  </div>
+                  <input
+                    value={col.title}
+                    onChange={(e) => setColumnTitle(col.id, e.target.value)}
+                    placeholder="Nombre de columna"
+                    className="h-10 w-full rounded-lg border border-border/60 bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                  />
                 </div>
 
-                <div className="col-span-5">
+                <div className="min-w-0">
                   <label className="mb-2 block text-sm font-medium text-foreground/90">
                     Tipo
                   </label>
@@ -69,6 +57,30 @@ export function Step1EditColumns({ onNext }: { onNext: () => void }) {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div className="flex flex-col items-end justify-end self-end">
+                  <label className="mb-2 hidden min-h-[1.25rem] text-sm font-medium sm:block sm:invisible">
+                    &nbsp;
+                  </label>
+                  <button
+                    type="button"
+                    disabled={!canRemove}
+                    onClick={() => removeColumn(col.id)}
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/60 bg-background text-destructive transition-colors hover:bg-destructive/10 disabled:pointer-events-none disabled:opacity-40"
+                    aria-label={
+                      !canRemove
+                        ? "No se puede eliminar: debe quedar al menos una columna"
+                        : "Eliminar columna"
+                    }
+                    title={
+                      !canRemove
+                        ? "Debe quedar al menos una columna"
+                        : "Eliminar columna"
+                    }
+                  >
+                    <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                  </button>
                 </div>
               </div>
             );

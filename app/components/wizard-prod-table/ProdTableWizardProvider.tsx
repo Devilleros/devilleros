@@ -1,11 +1,18 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { ProdTableColumn, ProdTableColumnType, ProdTableWizardState } from "../../../types/product-table/types";
 import { ProdTableWizardModel } from "./model";
 import type { ProdTableRecord } from "../../../types/product-table/types";
+import {
+  loadPersistedWizard,
+  savePersistedWizard,
+  type WizardStep,
+} from "./wizard-storage";
 
 type ProdTableWizardContextValue = {
+  step: WizardStep;
+  setStep: (step: WizardStep) => void;
   columns: ProdTableColumn[];
   records: ProdTableRecord[];
   activeRecordId: string | null;
@@ -35,6 +42,26 @@ export function ProdTableWizardProvider({
   const [state, setState] = useState<ProdTableWizardState>(() =>
     ProdTableWizardModel.createMockInitialState()
   );
+  const [step, setStep] = useState<WizardStep>(1);
+  /** Evita sobrescribir localStorage con el estado por defecto antes de leer el borrador. */
+  const [storageReady, setStorageReady] = useState(false);
+
+  useEffect(() => {
+    const loaded = loadPersistedWizard();
+    if (loaded) {
+      setState(loaded.state);
+      setStep(loaded.step);
+    }
+    setStorageReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!storageReady) return;
+    const id = window.setTimeout(() => {
+      savePersistedWizard({ v: 1, state, step });
+    }, 500);
+    return () => window.clearTimeout(id);
+  }, [state, step, storageReady]);
 
   const value = useMemo<ProdTableWizardContextValue>(() => {
     const setColumnTitle = (columnId: string, title: string) => {
@@ -87,6 +114,7 @@ export function ProdTableWizardProvider({
 
     const resetToMock = () => {
       setState(ProdTableWizardModel.createMockInitialState());
+      setStep(1);
     };
 
     const addRecord = () => {
@@ -138,6 +166,8 @@ export function ProdTableWizardProvider({
     };
 
     return {
+      step,
+      setStep,
       columns: state.columns,
       records: state.records,
       activeRecordId: state.activeRecordId,
@@ -151,7 +181,7 @@ export function ProdTableWizardProvider({
       setActiveRecordId,
       updateCell,
     };
-  }, [state]);
+  }, [state, step]);
 
   return (
     <ProdTableWizardContext.Provider value={value}>
