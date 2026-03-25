@@ -16,6 +16,7 @@ type ProdTableWizardContextValue = {
   resetToMock: () => void;
 
   addRecord: () => void;
+  removeRecord: (recordId: string) => void;
   setActiveRecordId: (recordId: string) => void;
   updateCell: (recordId: string, columnId: string, value: string) => void;
 };
@@ -100,6 +101,18 @@ export function ProdTableWizardProvider({
       });
     };
 
+    const removeRecord = (recordId: string) => {
+      setState((prev) => {
+        const model = new ProdTableWizardModel(prev);
+        model.removeRecord(recordId);
+        return {
+          columns: model.columns,
+          records: model.records,
+          activeRecordId: model.activeRecordId,
+        };
+      });
+    };
+
     const setActiveRecordId = (recordId: string) => {
       setState((prev) => {
         const model = new ProdTableWizardModel(prev);
@@ -134,6 +147,7 @@ export function ProdTableWizardProvider({
       removeColumn,
       resetToMock,
       addRecord,
+      removeRecord,
       setActiveRecordId,
       updateCell,
     };

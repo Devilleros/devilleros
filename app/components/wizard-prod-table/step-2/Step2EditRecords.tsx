@@ -1,7 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
+import { ImagePlus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/app/components/ui-drawio/dialog";
 import type { ProdTableColumn, ProdTableRecord } from "../../../../types/product-table/types";
 import { useProdTableWizard } from "../ProdTableWizardProvider";
 
@@ -18,9 +27,87 @@ function getColumnLabel(col: ProdTableColumn, idx: number) {
   return col.title.trim().length > 0 ? col.title : `Columna ${idx + 1}`;
 }
 
-export function Step2EditRecords({ onBack }: { onBack: () => void }) {
-  const { columns, records, activeRecordId, setActiveRecordId, addRecord, updateCell } =
-    useProdTableWizard();
+function ImagePickButton({
+  label,
+  value,
+  onDataUrl,
+  onClear,
+}: {
+  label: string;
+  value: string;
+  onDataUrl: (dataUrl: string) => void;
+  onClear: () => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <div className="space-y-3">
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="sr-only"
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          const dataUrl = await fileToDataUrl(file);
+          onDataUrl(dataUrl);
+          e.target.value = "";
+        }}
+      />
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          type="button"
+          variant={value ? "outline" : "default"}
+          className="gap-2"
+          onClick={() => inputRef.current?.click()}
+          aria-label={value ? `Cambiar imagen: ${label}` : `Agregar imagen: ${label}`}
+        >
+          <ImagePlus className="h-4 w-4" aria-hidden />
+          {value ? "Cambiar imagen" : "Elegir imagen o tomar foto"}
+        </Button>
+        {value ? (
+          <Button type="button" variant="ghost" onClick={onClear}>
+            Quitar
+          </Button>
+        ) : null}
+      </div>
+
+      {value ? (
+        <img
+          src={value}
+          alt={label}
+          className="max-h-48 w-full rounded-lg border border-border/60 object-contain bg-background"
+        />
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          Sube una imagen desde archivos o usa la cámara en el móvil.
+        </p>
+      )}
+    </div>
+  );
+}
+
+export function Step2EditRecords({
+  onBack,
+  onNext,
+}: {
+  onBack: () => void;
+  onNext: () => void;
+}) {
+  const {
+    columns,
+    records,
+    activeRecordId,
+    setActiveRecordId,
+    addRecord,
+    removeRecord,
+    updateCell,
+  } = useProdTableWizard();
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const activeRecord: ProdTableRecord | undefined = useMemo(() => {
     if (!activeRecordId) return records[0];
@@ -28,6 +115,13 @@ export function Step2EditRecords({ onBack }: { onBack: () => void }) {
   }, [activeRecordId, records]);
 
   const canAddMore = records.length < 200;
+  const canDeleteRecord = records.length > 1;
+
+  const handleConfirmDelete = () => {
+    if (!activeRecord?.id) return;
+    removeRecord(activeRecord.id);
+    setDeleteDialogOpen(false);
+  };
 
   return (
     <div className="space-y-5">
@@ -73,9 +167,26 @@ export function Step2EditRecords({ onBack }: { onBack: () => void }) {
       </div>
 
       <div className="rounded-xl border border-border/60 bg-card p-4">
-          <h3 className="text-base font-semibold mb-4">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-base font-semibold">
             Editando registro {records.findIndex((r) => r.id === activeRecord?.id) + 1}
           </h3>
+          <Button
+            type="button"
+            variant="destructive"
+            className="gap-2 sm:w-auto w-full"
+            disabled={!canDeleteRecord}
+            onClick={() => setDeleteDialogOpen(true)}
+            title={
+              !canDeleteRecord
+                ? "Debe quedar al menos un registro"
+                : "Borrar este registro"
+            }
+          >
+            <Trash2 className="h-4 w-4" aria-hidden />
+            Borrar registro
+          </Button>
+        </div>
 
         <div className="space-y-4">
           {columns.map((col, idx) => {
@@ -113,43 +224,14 @@ export function Step2EditRecords({ onBack }: { onBack: () => void }) {
                 )}
 
                 {col.type === "image" && (
-                  <div className="space-y-3">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      capture="environment"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
-                        const dataUrl = await fileToDataUrl(file);
-                        updateCell(activeRecord?.id ?? "", col.id, dataUrl);
-                      }}
-                      className="block w-full text-sm"
-                    />
-
-                    {value ? (
-                      <div className="space-y-2">
-                        <img
-                          src={value}
-                          alt={label}
-                          className="max-h-48 w-full rounded-lg border border-border/60 object-contain bg-background"
-                        />
-                        <div className="flex gap-2">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => updateCell(activeRecord?.id ?? "", col.id, "")}
-                          >
-                            Quitar
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">
-                        Sube una imagen o toma una foto.
-                      </p>
-                    )}
-                  </div>
+                  <ImagePickButton
+                    label={label}
+                    value={value}
+                    onDataUrl={(dataUrl) =>
+                      updateCell(activeRecord?.id ?? "", col.id, dataUrl)
+                    }
+                    onClear={() => updateCell(activeRecord?.id ?? "", col.id, "")}
+                  />
                 )}
               </div>
             );
@@ -157,11 +239,38 @@ export function Step2EditRecords({ onBack }: { onBack: () => void }) {
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <Button type="button" variant="outline" onClick={onBack}>
+      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <Button type="button" variant="outline" onClick={onBack} className="w-full sm:w-auto">
           Atrás
         </Button>
+        <Button type="button" onClick={onNext} className="w-full sm:w-auto">
+          Siguiente
+        </Button>
       </div>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>¿Borrar este registro?</DialogTitle>
+            <DialogDescription>
+              Esta acción no se puede deshacer. Se eliminarán los datos de este registro
+              en esta sesión (no hay persistencia en el servidor).
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              Cancelar
+            </Button>
+            <Button type="button" variant="destructive" onClick={handleConfirmDelete}>
+              Borrar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

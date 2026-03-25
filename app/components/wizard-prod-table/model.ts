@@ -127,6 +127,18 @@ export class ProdTableWizardModel {
     this.activeRecordId = recordId;
   }
 
+  removeRecord(recordId: string) {
+    if (this.records.length <= 1) return;
+    const idx = this.records.findIndex((r) => r.id === recordId);
+    if (idx === -1) return;
+    const wasActive = this.activeRecordId === recordId;
+    this.records = this.records.filter((r) => r.id !== recordId);
+    if (wasActive) {
+      const nextIdx = Math.min(idx, this.records.length - 1);
+      this.activeRecordId = this.records[nextIdx]?.id ?? null;
+    }
+  }
+
   updateCell(recordId: string, columnId: string, value: string) {
     this.records = this.records.map((r) => {
       if (r.id !== recordId) return r;
