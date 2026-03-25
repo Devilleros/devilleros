@@ -154,10 +154,10 @@ export default function NatPage() {
         <div className="max-w-6xl mx-auto px-8 text-center">
           <div className="border-t border-gray-700 pt-6">
             <p className="text-lg font-medium text-gray-300 mb-2">
-              By JMDO
+              By
             </p>
             <p className="text-sm text-gray-400 italic">
-              un detalle para alguien especial
+              Nobody
             </p>
             <div className="mt-4 flex justify-center">
               <div className="w-16 h-0.5 bg-gradient-to-r from-pink-300 to-rose-400">-..-------</div>

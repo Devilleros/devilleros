@@ -37,13 +37,6 @@ export const INICIO_PROJECTS: InicioProject[] = [
 
 export const INICIO_TOOLS: InicioTool[] = [
   {
-    id: "nat",
-    title: "Modelo 3D",
-    href: "/tools/Nat",
-    image: "/modelo3d/POXA1b.jpg",
-    imageAlt: "Vista del modelo 3D Lacasa POXA1b",
-  },
-  {
     id: "drawio",
     title: "Next AI Draw.io",
     href: "/tools/drawio",
@@ -63,5 +56,12 @@ export const INICIO_TOOLS: InicioTool[] = [
     href: "/tools/working-time",
     image: "/working-time/09567c98-d2c2-43e7-a042-d8a64bedc808.png",
     imageAlt: "Working Time",
+  },
+  {
+    id: "nat",
+    title: "Modelo 3D",
+    href: "/tools/Nat",
+    image: "/modelo3d/POXA1b.jpg",
+    imageAlt: "Vista del modelo 3D Lacasa POXA1b",
   },
 ];

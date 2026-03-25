@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import type { InicioTool } from "@/lib/inicio-content/inicio-content";
 
@@ -17,7 +17,7 @@ export default function SidebarHerramientas({ tools }: SidebarHerramientasProps)
         </p>
         <h2 className="mt-1 text-lg font-semibold">Accesos rápidos</h2>
         <p className="mt-1 text-xs text-muted-foreground">
-          Se abren en una nueva pestaña.
+          Navegación en esta misma vista.
         </p>
       </div>
 
@@ -26,8 +26,6 @@ export default function SidebarHerramientas({ tools }: SidebarHerramientasProps)
           <Link
             key={tool.id}
             href={tool.href}
-            target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-border hover:bg-muted/60"
           >
             <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-muted">
@@ -42,7 +40,7 @@ export default function SidebarHerramientas({ tools }: SidebarHerramientasProps)
             <span className="min-w-0 flex-1 text-sm font-medium leading-tight">
               {tool.title}
             </span>
-            <ExternalLink
+            <ChevronRight
               className="h-4 w-4 shrink-0 text-muted-foreground"
               aria-hidden
             />
