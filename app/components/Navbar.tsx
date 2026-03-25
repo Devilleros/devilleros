@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { useAuth } from "@/hooks/userSession";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,6 +30,8 @@ import {
   LogIn,
   LogOut,
   Menu,
+  Moon,
+  Sun,
   Wrench,
 } from "lucide-react";
 import Link from "next/link";
@@ -38,6 +42,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default function Navbar() {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
   const pathname = usePathname();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const avatar = user?.image;
   const initials = [
@@ -183,8 +193,30 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Right: auth */}
+        {/* Right: theme + auth */}
         <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            aria-label={
+              mounted && resolvedTheme === "dark"
+                ? "Cambiar a tema claro"
+                : "Cambiar a tema oscuro"
+            }
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            disabled={!mounted}
+          >
+            {!mounted ? (
+              <span className="h-5 w-5" aria-hidden />
+            ) : resolvedTheme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </Button>
+
           {isLoading ? (
             <span
               className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-muted/40 ring-1 ring-border/60"
